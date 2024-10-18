@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +34,7 @@
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand ps-3" href="">B.R.A.T</a>
+        <a class="navbar-brand ps-3" href="index.html">B.R.A.T</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
             <i class="fas fa-bars"></i>
         </button>
@@ -59,35 +60,39 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="index.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="customers.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Customers
                         </a>
                         <a class="nav-link" href="">
                             <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                            Brands
+                        </a>
+                        <a class="nav-link" href="category.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
                             Category
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="orders.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                             Orders
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="product.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-box-open"></i></div>
                             Products
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="coupon.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
                             Coupons
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="offers.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-gift"></i></div>
                             Offers
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="salesreport.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
                             Sales Report
                         </a>
@@ -97,81 +102,31 @@
         </div>
 
 
-
         <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4">Category</h1>
+            <main class="container px-5">
+
+                <h1 class="mt-4">Add Brands</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Category</li>
+                        <li class="breadcrumb-item"><a href="">Brands</a></li>
+                        <li class="breadcrumb-item active">Add Brands</li>
                     </ol>
 
-
-
-                    <div class="d-flex justify-content-between mb-3">
-                        <div class="input-group ms-1">
-                            <span class="input-group-text">
-                                <i class="fas fa-search"></i> <!-- Search Icon -->
-                            </span>
-                            <input type="text" id="searchProduct" class="form-control" placeholder="Search Category..." />
-                        </div>
-                        <!-- Sort Option on the Right with Icon -->
-                        <div class="input-group ms-1">
-                            <span class="input-group-text">
-                                <i class="fas fa-filter"></i> <!-- FontAwesome filter icon -->
-                            </span>
-                            <select id="sortOption" class="form-select">
-                                <option value="">Sort by</option>
-                                <option value="name">Name</option>
-                                <option value="age">Age</option>
-                                <option value="date">Start Date</option>
-                            </select>
-                        </div>
+                <form method="post" action="{% url 'add_brands' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <label class="form-label">Brand Name</label>
+                      <input type="text" name="brandname" class="form-control" id="">
                     </div>
-
-
-                    
-                    <div class="card mb-4">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-list me-1"></i>
-                                <span>Category Table</span>
-                            </div>
-                            <a href="{% url 'add_category' %}" class="btn btn-success">Add Category</a>
-
-                        </div>
-                        <div class="card-body">
-                            <table id="productsTable">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Category</th>
-                                        <th>Category type</th>
-                                        <th>Created date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for i in category %}
-                                    <tr>
-                                        <td>{{i.category_id}}</td>
-                                        <td>{{i.category}}</td>
-                                        <td>{{i.category_type}}</td>
-                                        <td>{{i.created_date |date:"Y-m-d"}} </td>
-                                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    
-                </div>
-            </main>
+                    <button type="button" class="btn btn-secondary">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+            </main>  
         </div>
     </div>
 
+
+
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{% static 'admin/js/scripts.js' %}"></script>

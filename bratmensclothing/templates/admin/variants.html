@@ -101,80 +101,80 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Products</h1>
+                    <h1 class="mt-4">Variants</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Products</li>
+                        <li class="breadcrumb-item"><a href="">Products</a></li>
+                        <li class="breadcrumb-item active">Variants</li>
                     </ol>
-
-                    <div class="d-flex justify-content-between mb-3">
-                        <div class="input-group ms-1">
-                            <span class="input-group-text">
-                                <i class="fas fa-search"></i> <!-- Search Icon -->
-                            </span>
-                            <input type="text" id="searchProduct" class="form-control" placeholder="Search Products..." />
-                        </div>
-                        <!-- Sort Option on the Right with Icon -->
-                        <div class="input-group ms-1">
-                            <span class="input-group-text">
-                                <i class="fas fa-filter"></i> <!-- FontAwesome filter icon -->
-                            </span>
-                            <select id="sortOption" class="form-select">
-                                <option value="">Sort by</option>
-                                <option value="name">Name</option>
-                                <option value="age">Age</option>
-                                <option value="date">Start Date</option>
-                            </select>
-                        </div>
-                    </div>
 
 
 
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-box me-1"></i>
-                                <span>Products Table</span>
-                            </div>
-                            <a href="{% url 'add_products' %}" class="btn btn-success">Add Products</a>
+                            <h5>Product Details</h5>
+                            <a href="" class="btn btn-primary">Edit Product</a>
                         </div>
                         <div class="card-body">
-                            <table id="productsTable">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Product Name</th>
-                                        <th>Discription</th>
-                                        <th>Brand</th>
-                                        <th>Category</th>
-                                        <th>Actions</th>
-                                        <th>Edit</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for product in products%}
-                                    <tr>
-                                        <td>{{ product.product_id}}</td>
-                                        <td>{{ product.product_name}}</td>
-                                        <td>{{ product.description}}</td>
-                                        <td>{{ product.brand.brandname}}</td>
-                                        <td>
-                                            {% for category in product.category.all %}
-                                                {{ category.category }}{% if not forloop.last %}, {% endif %}
-                                            {% endfor %}
-                                        </td>
-                                        <td>
-                                            <a href="{% url 'view_variants' %}" class="btn btn-primary btn-sm">Variants</a>
-                                        </td>
-                                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
-                                        <td>Listed</td>
-                                    {% endfor %}    
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="row mb-2">
+                                        <div class="col-6">
+                                            <img src="image1.jpg" alt="Image 1" class="img-fluid" style="object-fit: cover;">
+                                        </div>
+                                        <div class="col-6">
+                                            <img src="image2.jpg" alt="Image 2" class="img-fluid" style="object-fit: cover;">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <img src="image3.jpg" alt="Image 3" class="img-fluid" style="object-fit: cover;">
+                                        </div>
+                                        <div class="col-6">
+                                            <img src="image4.jpg" alt="Image 4" class="img-fluid" style="object-fit: cover;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h3>Product Name</h3>
+                                    <form action="" method="POST">
+                                        {% csrf_token %}
+                                        <p>
+                                            <strong>Size:</strong>
+                                            <input type="text" name="size" class="form-control" placeholder="Enter size" required>
+                                        </p>
+                                        <p>
+                                            <strong>Color:</strong>
+                                            <input type="text" name="color" class="form-control" placeholder="Enter color" required>
+                                        </p>
+                                        <p>
+                                            <strong>Occasion:</strong>
+                                            <input type="text" name="occasion" class="form-control" placeholder="Enter occasion" required>
+                                        </p>
+                                        <p>
+                                            <strong>Fit:</strong>
+                                            <input type="text" name="fit" class="form-control" placeholder="Enter fit type" required>
+                                        </p>
+                                        <p>
+                                            <strong>Price:</strong>
+                                            <input type="number" name="price" class="form-control" placeholder="Enter price" step="0.01" required>
+                                        </p>
+                                        <p>
+                                            <strong>Quantity:</strong>
+                                            <input type="number" name="quantity" class="form-control" placeholder="Enter quantity" required>
+                                        </p>
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn btn-success me-2">Add Variants</button>
+                                            <button type="button" class="btn btn-danger" onclick="">Delete Product</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
+                    
+
+
                     
                 </div>
             </main>
