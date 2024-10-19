@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('addbrands/',views.add_brands,name='add_brands'),
@@ -24,8 +26,7 @@ urlpatterns = [
     path('viewcategory/', views.view_category, name='view_category'),
     path('addproduct/',views.add_products,name='add_products'),
     path('', views.view_products, name='view_products'),
-    path('addvariants/',views.add_variants,name='add_variants'),
-    path('viewvariants/', views.view_variants, name='view_variants'),
-    # path('', views.view, name=''),
+    path('add-variants/<int:product_id>/', views.add_variants, name='add_variants'),
+    path('variants/<int:product_id>/', views.view_variants, name='view_variants'),
     
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

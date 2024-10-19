@@ -109,50 +109,153 @@
                         <li class="breadcrumb-item active">Add Variants</li>
                     </ol>
 
-                <form method="post" action="{% url 'add_variants' %}">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                      <label class="form-label">Product Name</label>
-                      <input type="text" name="productname" class="form-control" id="">
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Product description</label>
-                      <input type="text" name="description" class="form-control" id="">
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Brand</label>
-                      <select name="brandname" class="form-control form-select" required>
-                        <option value="">Select Brand</option>
-                        {% for brand in brands %}
-                            <option value="{{ brand.brandname }}">{{ brand.brandname }}</option>
-                        {% endfor %}
-                    </select>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Category</label>
-                    <select name="category" class="form-control form-select" required>
-                        <option value="">Select category</option>
-                        {% for category in categories %}
-                            <option value="{{ category.category_id }}">{{ category.category }}</option>
-                        {% endfor %}
-                    </select>
-                    </div>
+                
+                    <form method="post" action="{% url 'add_variants' product.product_id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <h3>Add Variants for {{ product.product_name }}</h3> 
+                        <div class="mb-3">
+                            <label class="form-label">Product Images</label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input type="file" name="image1" class="form-control" id="image1" accept="image/*" onchange="previewImage(this, 'preview1')" required>
+                                    <img id="preview1" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="file" name="image2" class="form-control" id="image2" accept="image/*" onchange="previewImage(this, 'preview2')" required>
+                                    <img id="preview2" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="file" name="image3" class="form-control" id="image3" accept="image/*" onchange="previewImage(this, 'preview3')" required>
+                                    <img id="preview3" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="file" name="image4" class="form-control" id="image4" accept="image/*" onchange="previewImage(this, 'preview4')" required>
+                                    <img id="preview4" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                </div>
+                            </div>
+                        </div>
                     
+                        <!-- <div class="mb-3">
+                            <label class="form-label">Size</label>
+                            <input type="text" name="size" class="form-control" placeholder="Enter size (e.g., S, M, L)" required>
+                        </div> -->
+                        <div class="mb-3">
+                            <label class="form-label">Sizes</label>
+                            <div id="sizesContainer" class="pb-1">
+                                <input type="text" name="sizes" class="form-control" placeholder="Enter size" required>
+                            </div>
+                            <button type="button" onclick="addSizeInput()" class="btn btn-secondary">Add Size</button>
+                        </div>
+
+                        <!-- <div class="mb-3">
+                            <label class="form-label">Color</label>
+                            <input type="text" name="color" class="form-control" placeholder="Enter color" required>
+                        </div> -->
+
+                        <div class="mb-3">
+                            <label class="form-label">Colors</label>
+                            <div id="colorsContainer" class="pb-1">
+                                <input type="text" name="colors[]" class="form-control" placeholder="Enter color" required>
+                            </div>
+                            <button type="button" onclick="addColorInput()" class="btn btn-secondary">Add Color</button>
+                        </div>
+
+                        <!-- <div class="mb-3">
+                            <label class="form-label">Occation</label>
+                            <input type="text" name="ocation" class="form-control" placeholder="Enter color" required>
+                        </div> -->
+                        <div class="mb-3">
+                            <label class="form-label">Occasions</label>
+                            <div id="occasionsContainer" class="pb-1">
+                                <input type="text" name="occasions[]" class="form-control" placeholder="Enter occasion" required>
+                            </div>
+                            <button type="button" onclick="addOccasionInput()" class="btn btn-secondary">Add Occasion</button>
+                        </div>
+                        
+
+                        <!-- <div class="mb-3">
+                            <label class="form-label">Fit</label>
+                            <input type="text" name="fit" class="form-control" placeholder="Enter fit type" required>
+                        </div> -->
+
+                        <div class="mb-3">
+                            <label class="form-label">Fit</label>
+                            <div id="fitContainer" class="pb-1">
+                                <input type="text" name="fit[]" class="form-control" placeholder="Enter fit" required>
+                            </div>
+                            <button type="button" onclick="addFitInput()" class="btn btn-secondary">Add Fit</button>
+                        </div>
                     
-                    <button type="button" class="btn btn-secondary">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
+                        <div class="mb-3">
+                            <label class="form-label">Price</label>
+                            <input type="number" name="price" class="form-control" placeholder="Enter price" step="0.01" required>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label class="form-label">Quantity</label>
+                            <input type="number" name="quantity" class="form-control" placeholder="Enter quantity" required>
+                        </div>
+                    
+                        <button type="button" class="btn btn-secondary">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    
+                   
             </main>  
         </div>
     </div>
 
 
-
-    
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{% static 'admin/js/scripts.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-    
+    <script>
+
+        function addSizeInput() {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'sizes[]';
+            input.className = 'form-control mt-2';
+            input.placeholder = 'Enter size';
+            document.getElementById('sizesContainer').appendChild(input);
+        }
+        function addColorInput() {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'colors[]'; // Update name to colors[]
+            input.className = 'form-control mt-2';
+            input.placeholder = 'Enter color';
+            document.getElementById('colorsContainer').appendChild(input);
+        }
+        function addOccasionInput() {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'occasions[]'; // Update name to occasions[]
+            input.className = 'form-control mt-2';
+            input.placeholder = 'Enter occasion';
+            document.getElementById('occasionsContainer').appendChild(input);
+        }
+        function addFitInput() {
+            const input = document.createElement('input');
+            input.type = 'text'; // Keep input type as text for fits
+            input.name = 'fit[]'; // Update name to fit[]
+            input.className = 'form-control mt-2';
+            input.placeholder = 'Enter fit';
+            document.getElementById('fitContainer').appendChild(input);
+        }
+        
+        function previewImage(input, previewId) {
+            var file = input.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = document.getElementById(previewId);
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </body>
 </html>

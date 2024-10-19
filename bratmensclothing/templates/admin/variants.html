@@ -112,65 +112,79 @@
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Product Details</h5>
-                            <a href="" class="btn btn-primary">Edit Product</a>
                         </div>
+            
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="row mb-2">
-                                        <div class="col-6">
-                                            <img src="image1.jpg" alt="Image 1" class="img-fluid" style="object-fit: cover;">
-                                        </div>
-                                        <div class="col-6">
-                                            <img src="image2.jpg" alt="Image 2" class="img-fluid" style="object-fit: cover;">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <img src="image3.jpg" alt="Image 3" class="img-fluid" style="object-fit: cover;">
-                                        </div>
-                                        <div class="col-6">
-                                            <img src="image4.jpg" alt="Image 4" class="img-fluid" style="object-fit: cover;">
-                                        </div>
-                                    </div>
+                                {% for variant in variants %}
+                                <div class="col-md-3">
+                                    <img src="{{ variant.image1.url }}" alt="Image 1" class="img-fluid mb-2" style="object-fit: cover;">
                                 </div>
-                                <div class="col-md-8">
-                                    <h3>Product Name</h3>
-                                    <form action="" method="POST">
-                                        {% csrf_token %}
-                                        <p>
-                                            <strong>Size:</strong>
-                                            <input type="text" name="size" class="form-control" placeholder="Enter size" required>
-                                        </p>
-                                        <p>
-                                            <strong>Color:</strong>
-                                            <input type="text" name="color" class="form-control" placeholder="Enter color" required>
-                                        </p>
-                                        <p>
-                                            <strong>Occasion:</strong>
-                                            <input type="text" name="occasion" class="form-control" placeholder="Enter occasion" required>
-                                        </p>
-                                        <p>
-                                            <strong>Fit:</strong>
-                                            <input type="text" name="fit" class="form-control" placeholder="Enter fit type" required>
-                                        </p>
-                                        <p>
-                                            <strong>Price:</strong>
-                                            <input type="number" name="price" class="form-control" placeholder="Enter price" step="0.01" required>
-                                        </p>
-                                        <p>
-                                            <strong>Quantity:</strong>
-                                            <input type="number" name="quantity" class="form-control" placeholder="Enter quantity" required>
-                                        </p>
-                                        <div class="d-flex">
-                                            <button type="submit" class="btn btn-success me-2">Add Variants</button>
-                                            <button type="button" class="btn btn-danger" onclick="">Delete Product</button>
-                                        </div>
-                                    </form>
+                                <div class="col-md-3">
+                                    <img src="{{ variant.image2.url }}" alt="Image 2" class="img-fluid mb-2" style="object-fit: cover;">
                                 </div>
+                                <div class="col-md-3">
+                                    <img src="{{ variant.image3.url }}" alt="Image 3" class="img-fluid mb-2" style="object-fit: cover;">
+                                </div>
+                                <div class="col-md-3">
+                                    <img src="{{ variant.image4.url }}" alt="Image 4" class="img-fluid mb-2" style="object-fit: cover;">
+                                </div>
+                                {% endfor %}
                             </div>
-                            
+                        
+                            <div class="row mt-4">
+                                <div class="col-md-9">
+                                    <h5>Variants Details</h5>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Property</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for variant in variants %}
+                                            <tr>
+                                                <td>Size</td>
+                                                <td>{{ variant.size }}</td> 
+                                            </tr>
+                                            <tr>
+                                                <td>Color</td>
+                                                <td>{{ variant.color }}</td> 
+                                            </tr>
+                                            <tr>
+                                                <td>Fit</td>
+                                                <td>{{ variant.fit }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Occasion</td>
+                                                <td>{{ variant.occation }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Price</td>
+                                                <td>{{ variant.price }}</td> 
+                                            </tr>
+                                            <tr>
+                                                <td>Quantity</td>
+                                                <td>{{ variant.qty }}</td> 
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                        
+                                <div class="col-md-3 d-flex flex-column justify-content-center align-items-center">
+                                    <!-- <a href="{% url 'add_variants' product.product_id  %}" class="btn btn-success mb-3 w-100">Add Variants</a> -->
+                                    {% if variants_added %}
+                                        <a href="" class="btn btn-warning mb-3 w-100">Edit Variants</a>
+                                    {% else %}
+                                    <a href="{% url 'add_variants' product.product_id %}" class="btn btn-success mb-3 w-100">Add Variants</a>
+                                    {% endif %}
+                                    <a href="" class="btn btn-danger mb-3 w-100">Delete</a>
+                                </div>                                
+                            </div>
                         </div>
+                        
                     </div>
                     
 
