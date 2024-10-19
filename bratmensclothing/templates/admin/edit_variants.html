@@ -103,79 +103,103 @@
         <div id="layoutSidenav_content">
             <main class="container px-5 pb-4">
 
-                <h1 class="mt-4">Add Variants</h1>
+                <h1 class="mt-4">Edit Variants</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="">Products</a></li>
-                        <li class="breadcrumb-item active">Add Variants</li>
+                        <li class="breadcrumb-item active">Edit Variants</li>
                     </ol>
 
                 
-                    <form method="post" action="{% url 'add_variants' product.product_id %}" enctype="multipart/form-data">
+                    <form method="post" action="{% url 'edit_variants' product.product_id %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <h3>Add Variants for {{ product.product_name }}</h3> 
+                        <h3>Edit Variants for {{ product.product_name }}</h3> 
+                    
+                        <!-- Product Images -->
                         <div class="mb-3">
                             <label class="form-label">Product Images</label>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <input type="file" name="image1" class="form-control" id="image1" accept="image/*" onchange="previewImage(this, 'preview1')" required>
-                                    <img id="preview1" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                    <input type="file" name="image1" class="form-control" id="image1" accept="image/*" onchange="previewImage(this, 'preview1')">
+                                    {% if variant.image1 %}
+                                        <img id="preview1" src="{{ variant.image1.url }}" class="img-thumbnail mt-2" style="max-width: 100px; max-height: 100px;">
+                                    {% else %}
+                                        <img id="preview1" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="file" name="image2" class="form-control" id="image2" accept="image/*" onchange="previewImage(this, 'preview2')" required>
-                                    <img id="preview2" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                    <input type="file" name="image2" class="form-control" id="image2" accept="image/*" onchange="previewImage(this, 'preview2')">
+                                    {% if variant.image2 %}
+                                        <img id="preview2" src="{{ variant.image2.url }}" class="img-thumbnail mt-2" style="max-width: 100px; max-height: 100px;">
+                                    {% else %}
+                                        <img id="preview2" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="file" name="image3" class="form-control" id="image3" accept="image/*" onchange="previewImage(this, 'preview3')" required>
-                                    <img id="preview3" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                    <input type="file" name="image3" class="form-control" id="image3" accept="image/*" onchange="previewImage(this, 'preview3')">
+                                    {% if variant.image3 %}
+                                        <img id="preview3" src="{{ variant.image3.url }}" class="img-thumbnail mt-2" style="max-width: 100px; max-height: 100px;">
+                                    {% else %}
+                                        <img id="preview3" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="file" name="image4" class="form-control" id="image4" accept="image/*" onchange="previewImage(this, 'preview4')" required>
-                                    <img id="preview4" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                    <input type="file" name="image4" class="form-control" id="image4" accept="image/*" onchange="previewImage(this, 'preview4')">
+                                    {% if variant.image4 %}
+                                        <img id="preview4" src="{{ variant.image4.url }}" class="img-thumbnail mt-2" style="max-width: 100px; max-height: 100px;">
+                                    {% else %}
+                                        <img id="preview4" class="img-thumbnail mt-2" style="display: none; max-width: 100px; max-height: 100px;">
+                                    {% endif %}
                                 </div>
                             </div>
-                        </div>
-                    
-                        <div class="mb-3">
-                            <label class="form-label">Sizes</label>
-                            <div id="sizesContainer" class="pb-1">
-                                <input type="text" name="sizes[]" class="form-control" placeholder="Enter size" required>
-                            </div>
-                            <button type="button" onclick="addSizeInput()" class="btn btn-secondary">Add Size</button>
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label">Sizes</label>
+                            <div id="sizesContainer" class="pb-1">
+                                {% for size in variant.size %}
+                                    <div class="input-group mb-2">
+                                        <input type="text" name="sizes[]" class="form-control" value="{{ size }}" placeholder="Enter size">
+                                        <button type="button" class="btn btn-danger" onclick="removeSizeInput(this)">Remove</button>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <button type="button" onclick="addSizeInput()" class="btn btn-secondary">Add Size</button>
+                        </div>
+                        
+                        <div class="mb-3">
                             <label class="form-label">Colors</label>
                             <div id="colorsContainer" class="pb-1">
-                                <input type="text" name="colors[]" class="form-control" placeholder="Enter color" required>
+                                {% for color in variant.color %}
+                                    <div class="input-group mb-2">
+                                        <input type="text" name="colors[]" class="form-control" value="{{ color }}" placeholder="Enter color">
+                                        <button type="button" class="btn btn-danger" onclick="removeColorInput(this)">Remove</button>
+                                    </div>
+                                {% endfor %}
                             </div>
                             <button type="button" onclick="addColorInput()" class="btn btn-secondary">Add Color</button>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Occation</label>
-                            <input type="text" name="occasions" class="form-control" placeholder="Enter color" required>
-                        </div>
-                       
+                            <label class="form-label">Occasions</label>
+                            <input type="text" name="occasions" class="form-control" value="{{ variant.occation }}" placeholder="Enter occasion" required>
+                        </div> 
                         <div class="mb-3">
                             <label class="form-label">Fit</label>
-                            <input type="text" name="fit" class="form-control" placeholder="Enter fit type" required>
+                            <input type="text" name="fit" class="form-control" value="{{ variant.fit }}" placeholder="Enter fit type" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Price</label>
-                            <input type="number" name="price" class="form-control" placeholder="Enter price" step="0.01" required>
+                            <input type="number" name="price" class="form-control" value="{{ variant.price }}" placeholder="Enter price" step="0.01" required>
                         </div>
-                    
                         <div class="mb-3">
                             <label class="form-label">Quantity</label>
-                            <input type="number" name="quantity" class="form-control" placeholder="Enter quantity" required>
+                            <input type="number" name="quantity" class="form-control" value="{{ variant.qty }}" placeholder="Enter quantity" required>
                         </div>
-                    
                         <button type="button" class="btn btn-secondary">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
                     
-                   
             </main>  
         </div>
     </div>
@@ -188,14 +212,14 @@
 
         function addSizeInput() {
             const sizeDiv = document.createElement('div');
-            sizeDiv.className = 'input-group mt-2';
+            sizeDiv.className = 'input-group mb-2';
         
             const input = document.createElement('input');
             input.type = 'text';
             input.name = 'sizes[]';
             input.className = 'form-control';
             input.placeholder = 'Enter size';
-            
+        
             const removeButton = document.createElement('button');
             removeButton.type = 'button';
             removeButton.className = 'btn btn-danger';
@@ -208,10 +232,10 @@
             sizeDiv.appendChild(removeButton);
             document.getElementById('sizesContainer').appendChild(sizeDiv);
         }
-
+        
         function addColorInput() {
             const colorDiv = document.createElement('div');
-            colorDiv.className = 'input-group mt-2';
+            colorDiv.className = 'input-group mb-2';
         
             const input = document.createElement('input');
             input.type = 'text';
@@ -231,8 +255,16 @@
             colorDiv.appendChild(removeButton);
             document.getElementById('colorsContainer').appendChild(colorDiv);
         }
-
         
+        function removeSizeInput(button) {
+            button.parentElement.remove();
+        }
+        
+        function removeColorInput(button) {
+            button.parentElement.remove();
+        }
+        
+    
         function previewImage(input, previewId) {
             var file = input.files[0];
             if (file) {

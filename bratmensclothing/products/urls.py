@@ -28,5 +28,7 @@ urlpatterns = [
     path('', views.view_products, name='view_products'),
     path('add-variants/<int:product_id>/', views.add_variants, name='add_variants'),
     path('variants/<int:product_id>/', views.view_variants, name='view_variants'),
+    path('edit-variants/<int:product_id>/', views.edit_variants, name='edit_variants'),
+    path('delete-variants/<int:product_id>/', views.delete_variants, name='delete_variants'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
