@@ -149,7 +149,7 @@
                                         <th>Category</th>
                                         <th>Category type</th>
                                         <th>Created date</th>
-                                        <th>Action</th>
+                                        <th rowspan="2">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -159,7 +159,10 @@
                                         <td>{{i.category}}</td>
                                         <td>{{i.category_type}}</td>
                                         <td>{{i.created_date |date:"Y-m-d"}} </td>
-                                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                                        <td >
+                                            <button class="btn btn-primary btn-sm">Edit</button>
+                                            <button class="btn btn-primary btn-sm">View</button>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
