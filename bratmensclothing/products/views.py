@@ -6,15 +6,44 @@ from django.contrib import messages
 def add_brands(request):
     if request.method=='POST':
         brand=request.POST.get('brandname')
-
         value=Brand.objects.create(brandname=brand)
         print(value)
+        messages.success(request, 'Brand added successfully!')  
         return redirect('view_brands')
-    return render(request,'admin/add_brand.html')
+    return render(request,'admin/brand.html')
+
 
 def view_brands(request):
-    Brands=Brand.objects.all()
-    return render(request,'admin/brand.html',{'brand':Brands})
+    Brands=Brand.objects.all().order_by('is_deleted', '-created_at')
+    return render(request,'admin/brand.html',{'brands':Brands})
+
+
+def edit_brands(request,brand_id):
+    Brands = get_object_or_404(Brand, brand_id=brand_id)
+
+    if request.method == 'POST':
+        brandname = request.POST.get('brandname')
+        Brands.brandname = brandname
+        Brands.save()  
+        messages.success(request, 'Brand updated successfully!')  
+        return redirect('view_brands')  
+    return render(request, 'admin/brand.html', {'brands':Brands})
+
+
+def soft_delete_brand(request,brand_id):
+    brand= get_object_or_404(Brand,brand_id=brand_id)
+    brand.is_deleted=True
+    brand.save()
+
+    messages.success(request, 'Brand successfully soft deleted!')
+    return redirect('view_brands')
+
+def restore_brand(request,brand_id):
+    brand= get_object_or_404(Brand,brand_id=brand_id)
+    brand.is_deleted=False
+    brand.save()
+    messages.success(request, 'Brand successfully restored!')
+    return redirect('view_brands')
 
 
 def add_category(request):
@@ -24,13 +53,44 @@ def add_category(request):
 
         value=Category.objects.create(category=category,category_type=categorytype)
         print(value)
+        messages.success(request, 'Category added successfully!')  
         return redirect('view_category')
-    return render(request,'admin/add_category.html')
+    return render(request,'admin/category.html')
+
 
 def view_category(request):
-    category=Category.objects.all()
+    category=Category.objects.all().order_by('is_deleted', '-created_date')
     return render(request,'admin/category.html',{'category':category})
 
+
+def soft_delete_category(request,category_id):
+    category= get_object_or_404(Category,category_id=category_id)
+    category.is_deleted=True
+    category.save()
+
+    messages.success(request, 'Category successfully soft deleted!')
+    return redirect('view_category')
+
+def restore_category(request,category_id):
+    category= get_object_or_404(Category,category_id=category_id)
+    category.is_deleted=False
+    category.save()
+    messages.success(request, 'Category successfully restored!')
+    return redirect('view_category')
+
+
+def edit_category(request, category_id):
+    category = get_object_or_404(Category, category_id=category_id)
+
+    if request.method == 'POST':
+        category_name = request.POST.get('category')
+        category_type = request.POST.get('categorytype')
+        category.category = category_name
+        category.category_type = category_type
+        category.save()  
+        messages.success(request, 'Category updated successfully!')  
+        return redirect('view_category')  
+    return render(request, 'admin/category.html', {'category': category})
 
 
 
@@ -57,9 +117,11 @@ def add_products(request):
     brands = Brand.objects.all()
     return render(request, 'admin/add_product.html', {'categories': categories,'brands': brands})
 
+
 def view_products(request):
     products=Product.objects.all().order_by('is_deleted', '-created_at')
     return render(request,'admin/product.html',{'products':products})
+
 
 def edit_product(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)
@@ -77,6 +139,7 @@ def edit_product(request, product_id):
         product.save()  
         return redirect('view_products') 
     return render(request, 'admin/edit_product.html', {'product': product,'brands': brands,'categories': categories,})
+
 
 def soft_delete_product(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)

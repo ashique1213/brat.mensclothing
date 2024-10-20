@@ -21,9 +21,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('addbrands/',views.add_brands,name='add_brands'),
-    path('viewbrands/', views.view_brands, name='view_brands'),
+    path('', views.view_brands, name='view_brands'),
+    path('edit-brands/<int:brand_id>', views.edit_brands, name='edit_brands'),
+    path('brand/soft-delete/<int:brand_id>/', views.soft_delete_brand, name='soft_delete_brand'),
+    path('brand/restore/<int:brand_id>/', views.restore_brand, name='restore_brand'),
     path('addcategory/',views.add_category,name='add_category'),
-    path('', views.view_category, name='view_category'),
+    path('viewcategory', views.view_category, name='view_category'),
+    path('edit-category/<int:category_id>', views.edit_category, name='edit_category'),
+    path('category/soft-delete/<int:category_id>/', views.soft_delete_category, name='soft_delete_category'),
+    path('category/restore/<int:category_id>/', views.restore_category, name='restore_category'),
     path('addproduct/',views.add_products,name='add_products'),
     path('viewproducts/', views.view_products, name='view_products'),
     path('edit-product/<int:product_id>', views.edit_product, name='edit_product'),
