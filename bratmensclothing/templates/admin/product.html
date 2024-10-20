@@ -120,8 +120,7 @@
                             </span>
                             <select id="sortOption" class="form-select">
                                 <option value="">Sort by</option>
-                                <option value="name">Name</option>
-                                <option value="age">Age</option>
+                                <!-- <option value="name">Name</option> -->
                                 <option value="date">Start Date</option>
                             </select>
                         </div>
@@ -146,8 +145,8 @@
                                         <th>Discription</th>
                                         <th>Brand</th>
                                         <th>Category</th>
+                                        <th>Add Variant</th>
                                         <th>Actions</th>
-                                        <th>Edit</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -166,8 +165,16 @@
                                         <td>
                                             <a href="{% url 'view_variants' product.product_id  %}" class="btn btn-primary btn-sm">Variants</a>
                                         </td>
-                                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
-                                        <td>Listed</td>
+                                        <td>
+                                            <a href="{% url 'edit_product' product.product_id %}" class="btn btn-primary btn-sm">Edit</a>
+                                        </td>
+                                        <td>
+                                            {% if not product.is_deleted %}
+                                            <a href="{% url 'soft_delete_product' product.product_id %}" class="btn btn-danger btn-sm">Soft Delete</a>
+                                            {% else %}
+                                            <a href="{% url 'restore_product' product.product_id %}" class="btn btn-success btn-sm">Restore</a>
+                                            {% endif %}
+                                        </td>
                                     {% endfor %}    
                                     </tr>
                                 </tbody>

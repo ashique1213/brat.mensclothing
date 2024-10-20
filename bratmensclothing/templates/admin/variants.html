@@ -151,44 +151,6 @@
                                                         {{ size }}{% if not forloop.last %}, {% endif %}
                                                     {% endfor %}
                                                 </td> 
-                                                <td rowspan="6"><div class="col-md-3 d-flex flex-column justify-content-center align-items-center mt-4">
-                                                    <!-- <a href="{% url 'add_variants' product.product_id  %}" class="btn btn-success mb-3 w-100">Add Variants</a> -->
-                                                    {% if variants_added %}
-                                                        <a href="{% url 'edit_variants' product.product_id %}" class="btn btn-warning mb-3 w-100">Edit Variants</a>
-                                                    {% else %}
-                                                    <a href="{% url 'add_variants' product.product_id %}" class="btn btn-success mb-3 w-100">Add Variants</a>
-                                                    {% endif %}
-                                                    <!-- <a href="{% url 'delete_variants' product.product_id %}" class="btn btn-danger mb-3 w-100">Delete</a> -->
-                                                
-                                                    {% for variant in variants %}
-                                                    <button type="button" class="btn btn-secondary mb-3 w-100" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ variant.variant_id }}">
-                                                        Clear Out 
-                                                    </button>
-                                                    
-                                                    <div class="modal fade" id="confirmDeleteModal{{ variant.variant_id }}" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="confirmDeleteLabel">Please Confirm</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    Are you sure you want to clear this variant?
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                                                                    <form method="POST" action="{% url 'delete_variants' product.product_id %}">
-                                                                        {% csrf_token %}
-                                                                        <input type="hidden" name="variant_id" value="{{ variant.variant_id }}">
-                                                                        <button type="submit" class="btn btn-secondary">Clear</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {% endfor %}
-                                                
-                                                </div> </td>
                                             </tr>
                                             <tr>
                                                 <td>Color</td>

@@ -32,6 +32,8 @@ def view_category(request):
     return render(request,'admin/category.html',{'category':category})
 
 
+
+
 def add_products(request):
     if request.method == 'POST':
         productname = request.POST.get('productname')
@@ -56,11 +58,38 @@ def add_products(request):
     return render(request, 'admin/add_product.html', {'categories': categories,'brands': brands})
 
 def view_products(request):
-    products=Product.objects.all()
+    products=Product.objects.all().order_by('is_deleted', '-created_at')
     return render(request,'admin/product.html',{'products':products})
 
+def edit_product(request, product_id):
+    product = get_object_or_404(Product, product_id=product_id)
+    brands = Brand.objects.all()  
+    categories = Category.objects.all() 
+
+    if request.method == 'POST':
+        product.product_name = request.POST.get('product_name')
+        product.description = request.POST.get('description')
+        product.brand_id = request.POST.get('brandname')  
+        category_id = request.POST.get('category')
+        
+        if category_id:
+            product.category.set([category_id]) 
+        product.save()  
+        return redirect('view_products') 
+    return render(request, 'admin/edit_product.html', {'product': product,'brands': brands,'categories': categories,})
+
+def soft_delete_product(request, product_id):
+    product = get_object_or_404(Product, product_id=product_id)
+    product.is_deleted = True
+    product.save()
+    return redirect('view_products')
 
 
+def restore_product(request, product_id):
+    product = get_object_or_404(Product, product_id=product_id)
+    product.is_deleted = False
+    product.save()
+    return redirect('view_products') 
 
 
 def add_variants(request,product_id):

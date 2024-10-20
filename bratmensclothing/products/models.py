@@ -13,7 +13,9 @@ class Category(models.Model):
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)  
     category_type = models.CharField(max_length=50)   
     created_date = models.DateTimeField(auto_now_add=True) 
-    updated_date = models.DateTimeField(auto_now=True)       
+    updated_date = models.DateTimeField(auto_now=True) 
+    is_deleted = models.BooleanField(default=False)
+      
 
     def __str__(self):
         return self.category 
@@ -36,6 +38,7 @@ class Product(models.Model):
     category = models.ManyToManyField(Category, related_name='products')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return self.product_name
