@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+
     path('addbrands/',views.add_brands,name='add_brands'),
     path('viewbrands/', views.view_brands, name='view_brands'),
     path('edit-brands/<int:brand_id>', views.edit_brands, name='edit_brands'),
@@ -31,8 +32,7 @@ urlpatterns = [
     path('category/soft-delete/<int:category_id>/', views.soft_delete_category, name='soft_delete_category'),
     path('category/restore/<int:category_id>/', views.restore_category, name='restore_category'),
     path('addproduct/',views.add_products,name='add_products'),
-
-    path('', views.view_products, name='view_products'),
+    path('viewproducts/', views.view_products, name='view_products'),
     path('edit-product/<int:product_id>', views.edit_product, name='edit_product'),
     path('products/soft-delete/<int:product_id>/', views.soft_delete_product, name='soft_delete_product'),
     path('products/restore/<int:product_id>/', views.restore_product, name='restore_product'),
@@ -40,5 +40,6 @@ urlpatterns = [
     path('variants/<int:product_id>/', views.view_variants, name='view_variants'),
     path('edit-variants/<int:product_id>/', views.edit_variants, name='edit_variants'),
     path('delete-variants/<int:product_id>/', views.delete_variants, name='delete_variants'),
+
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

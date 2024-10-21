@@ -115,7 +115,7 @@
                         </div>
             
                         <div class="card-body">
-                            <div class="row">
+                            <!-- <div class="row">
                                 {% for variant in variants %}
                                 <div class="col-md-3">
                                     <img src="{{ variant.image1.url }}" alt="Image 1" class="img-fluid mb-2" style="object-fit: cover;">
@@ -129,6 +129,35 @@
                                 <div class="col-md-3">
                                     <img src="{{ variant.image4.url }}" alt="Image 4" class="img-fluid mb-2" style="object-fit: cover;">
                                 </div>
+                                {% endfor %}
+                            </div> -->
+
+                            <div class="row">
+                                {% for variant in variants %}
+                                    <div class="col-md-3">
+                                        <h6>Image-1 :</h6> 
+                                        {% if variant.image1 %}
+                                            <img src="{{ variant.image1.url }}" alt="Image 1" class="img-fluid mb-2" style="object-fit: cover; width: 200px;">
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6>Image-2 :</h6> 
+                                        {% if variant.image2 %}
+                                            <img src="{{ variant.image2.url }}" alt="Image 2" class="img-fluid mb-2" style="object-fit: cover; width: 200px;">
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6>Image-3 :</h6> 
+                                        {% if variant.image3 %}
+                                            <img src="{{ variant.image3.url }}" alt="Image 3" class="img-fluid mb-2" style="object-fit: cover; width: 200px;">
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6>Image-4 :</h6> 
+                                        {% if variant.image4 %}
+                                            <img src="{{ variant.image4.url }}" alt="Image 4" class="img-fluid mb-2" style="object-fit: cover; width: 200px;">
+                                        {% endif %}
+                                    </div>
                                 {% endfor %}
                             </div>
                         
@@ -151,6 +180,7 @@
                                                         {{ size }}{% if not forloop.last %}, {% endif %}
                                                     {% endfor %}
                                                 </td> 
+            
                                             </tr>
                                             <tr>
                                                 <td>Color</td>

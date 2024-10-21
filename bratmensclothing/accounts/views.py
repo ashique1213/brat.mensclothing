@@ -53,9 +53,6 @@ def signup_user(request):
             new_user=Users.objects.create(username=username,phone_number=phone,email=email,password=hashed_password)
             new_user.save()
             return JsonResponse({'status': 'success', 'message': 'User created successfully'}, status=200)
-
-
-
     return render(request, 'user/signup.html')
 
 
@@ -92,5 +89,3 @@ def home_user(request):
 
 
 
-def dashboard(request):
-    return render(request,'admin/product.html')

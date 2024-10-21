@@ -200,12 +200,7 @@
                                             </button>                                                                                        
                                         </td>
                                         <td>
-                                            <!-- {% if not product.is_deleted %}
-                                            <a href="{% url 'soft_delete_product' product.product_id %}" class="btn btn-danger btn-sm">Soft Delete</a>
-                                            {% else %}
-                                            <a href="{% url 'restore_product' product.product_id %}" class="btn btn-success btn-sm">Restore</a>
-                                            {% endif %} -->
-
+                                        
 
                                             {% if not product.is_deleted %}
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal{{ product.product_id }}" 
