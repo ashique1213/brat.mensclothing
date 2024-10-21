@@ -67,6 +67,11 @@ def login_user(request):
 
         try:
             user = Users.objects.get(email=email)
+
+            if user.isBlocked:
+                print('User is blocked.')
+                return JsonResponse({'status': 'error', 'errors': {'account': 'Your account is blocked.'}}, status=403)
+            
             if check_password(password, user.password):
                 print('User authenticated successfully.')
 

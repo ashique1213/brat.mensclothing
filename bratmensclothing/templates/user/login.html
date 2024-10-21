@@ -649,7 +649,16 @@
                         }
                     },
                     error: function(xhr) {
-                        if (xhr.status === 400) {
+                        if (xhr.status === 403) {
+                            // Handle the blocked user error
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Access Denied',
+                                text: 'Your account is blocked.',
+                                confirmButtonColor: '#000'
+                            });
+                        }
+                        else if (xhr.status === 400) {
                             const errors = xhr.responseJSON.errors;
         
                             // Loop through errors and display them in SweetAlert

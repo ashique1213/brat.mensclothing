@@ -113,23 +113,33 @@ def add_products(request):
         product.category.set(category_ids)  
         messages.success(request, 'Product added successfully!')  
         return redirect('view_products')  
-    categories = Category.objects.all()
-    brands = Brand.objects.all()
+    # categories = Category.objects.all()
+    categories = Category.objects.filter(is_deleted=False)
+    # brands = Brand.objects.all()
+    brands = Brand.objects.filter(is_deleted=False)
     return render(request, 'admin/product.html', {'categories': categories, 'brands': brands})
 
 
 def view_products(request):
     products=Product.objects.all().order_by('is_deleted', '-created_at')
-    brands = Brand.objects.all()
-    categories = Category.objects.all()
+    # products = Product.objects.filter(brand__is_deleted=False, category__is_deleted=False).order_by('is_deleted', '-created_at')
+
+    # brands = Brand.objects.all()
+    brands = Brand.objects.filter(is_deleted=False)
+    # categories = Category.objects.all()
+    categories = Category.objects.filter(is_deleted=False)
+
 
     return render(request,'admin/product.html',{'products':products ,'brands': brands,'categories': categories})
 
 
 def edit_product(request, product_id):
     products = get_object_or_404(Product, product_id=product_id)
-    brands = Brand.objects.all()  
-    categories = Category.objects.all() 
+    # brands = Brand.objects.all() 
+    brands = Brand.objects.filter(is_deleted=False)
+    # categories = Category.objects.all() 
+    categories = Category.objects.filter(is_deleted=False)
+
 
     if request.method == 'POST':
         products.product_name = request.POST.get('product_name')
