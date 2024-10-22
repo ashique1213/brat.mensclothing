@@ -33,7 +33,7 @@
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand ps-3" href="">B.R.A.T</a>
+        <a class="navbar-brand " href="" style="padding-left: 5%;">B.R.A.T</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
             <i class="fas fa-bars"></i>
         </button>
@@ -57,27 +57,31 @@
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
+                <div class="sb-sidenav-menu p-5" >
                     <div class="nav">
-                        <a class="nav-link" href="">
+                        <a class="nav-link " href="{% url 'admin_dashboard' %}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link " href="{% url 'userss:view_user' %}">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Customers
+                            Users
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="{% url 'products:view_brands' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-flag"></i></div>
+                            Brands
+                        </a>
+                        <a class="nav-link" href="{% url 'products:view_category' %}">
                             <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
                             Category
+                        </a>
+                        <a class="nav-link active" href="{% url 'products:view_products' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-box-open"></i></div>
+                            Products
                         </a>
                         <a class="nav-link" href="">
                             <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                             Orders
-                        </a>
-                        <a class="nav-link" href="">
-                            <div class="sb-nav-link-icon"><i class="fas fa-box-open"></i></div>
-                            Products
                         </a>
                         <a class="nav-link" href="">
                             <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
@@ -92,6 +96,7 @@
                             Sales Report
                         </a>
                     </div>
+                    
                 </div>
             </nav>
         </div>
@@ -174,7 +179,7 @@
                                         <tbody>
                                             {% for variant in variants %}
                                             <tr>
-                                                <td>{{ variant.variant_id}}</td>
+                                                <td>Size</td>
                                                 <td>
                                                     {% for size in variant.size %}
                                                         {{ size }}{% if not forloop.last %}, {% endif %}
@@ -213,13 +218,13 @@
                                 </div>
                         
                                 <div class="col-md-3 d-flex flex-column justify-content-center align-items-center mt-4">
-                                    <!-- <a href="{% url 'add_variants' product.product_id  %}" class="btn btn-success mb-3 w-100">Add Variants</a> -->
+                                    <!-- <a href="{% url 'products:add_variants' product.product_id  %}" class="btn btn-success mb-3 w-100">Add Variants</a> -->
                                     {% if variants_added %}
-                                        <a href="{% url 'edit_variants' product.product_id %}" class="btn btn-warning mb-3 w-100">Edit Variants</a>
+                                        <a href="{% url 'products:edit_variants' product.product_id %}" class="btn btn-warning mb-3 w-100">Edit Variants</a>
                                     {% else %}
-                                    <a href="{% url 'add_variants' product.product_id %}" class="btn btn-success mb-3 w-100">Add Variants</a>
+                                    <a href="{% url 'products:add_variants' product.product_id %}" class="btn btn-success mb-3 w-100">Add Variants</a>
                                     {% endif %}
-                                    <!-- <a href="{% url 'delete_variants' product.product_id %}" class="btn btn-danger mb-3 w-100">Delete</a> -->
+                                    <!-- <a href="{% url 'products:delete_variants' product.product_id %}" class="btn btn-danger mb-3 w-100">Delete</a> -->
                                 
                                     {% for variant in variants %}
                                     <button type="button" class="btn btn-secondary mb-3 w-100" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ variant.variant_id }}">
@@ -238,7 +243,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                                                    <form method="POST" action="{% url 'delete_variants' product.product_id %}">
+                                                    <form method="POST" action="{% url 'products:delete_variants' product.product_id %}">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="variant_id" value="{{ variant.variant_id }}">
                                                         <button type="submit" class="btn btn-secondary">Clear</button>

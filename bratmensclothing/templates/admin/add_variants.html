@@ -45,7 +45,7 @@
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand ps-3" href="">B.R.A.T</a>
+        <a class="navbar-brand " href="" style="padding-left: 5%;" >B.R.A.T</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
             <i class="fas fa-bars"></i>
         </button>
@@ -58,7 +58,7 @@
                     <li><a class="dropdown-item" href="#!">Settings</a></li>
                     <li><a class="dropdown-item" href="#!">Profile</a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li><a class="dropdown-item" href="">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -69,27 +69,31 @@
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
+                <div class="sb-sidenav-menu p-5" >
                     <div class="nav">
-                        <a class="nav-link" href="">
+                        <a class="nav-link " href="{% url 'admin_dashboard' %}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link " href="{% url 'userss:view_user' %}">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Customers
+                            Users
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="{% url 'products:view_brands' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-flag"></i></div>
+                            Brands
+                        </a>
+                        <a class="nav-link" href="{% url 'products:view_category' %}">
                             <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
                             Category
+                        </a>
+                        <a class="nav-link active" href="{% url 'products:view_products' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-box-open"></i></div>
+                            Products
                         </a>
                         <a class="nav-link" href="">
                             <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                             Orders
-                        </a>
-                        <a class="nav-link" href="">
-                            <div class="sb-nav-link-icon"><i class="fas fa-box-open"></i></div>
-                            Products
                         </a>
                         <a class="nav-link" href="">
                             <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
@@ -104,6 +108,7 @@
                             Sales Report
                         </a>
                     </div>
+                    
                 </div>
             </nav>
         </div>
@@ -119,7 +124,7 @@
                     </ol>
 
                 
-                    <form method="post" action="{% url 'add_variants' product.product_id %}" enctype="multipart/form-data">
+                    <form method="post" action="{% url 'products:add_variants' product.product_id %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         <h3>Add Variants for {{ product.product_name }}</h3> 
                         

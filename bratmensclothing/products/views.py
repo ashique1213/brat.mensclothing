@@ -9,7 +9,7 @@ def add_brands(request):
         value=Brand.objects.create(brandname=brand)
         print(value)
         messages.success(request, 'Brand added successfully!')  
-        return redirect('view_brands')
+        return redirect('products:view_brands')
     return render(request,'admin/brand.html')
 
 
@@ -26,7 +26,7 @@ def edit_brands(request,brand_id):
         Brands.brandname = brandname
         Brands.save()  
         messages.success(request, 'Brand updated successfully!')  
-        return redirect('view_brands')  
+        return redirect('products:view_brands')  
     return render(request, 'admin/brand.html', {'brands':Brands})
 
 
@@ -36,14 +36,14 @@ def soft_delete_brand(request,brand_id):
     brand.save()
 
     messages.success(request, 'Brand successfully soft deleted!')
-    return redirect('view_brands')
+    return redirect('products:view_brands')
 
 def restore_brand(request,brand_id):
     brand= get_object_or_404(Brand,brand_id=brand_id)
     brand.is_deleted=False
     brand.save()
     messages.success(request, 'Brand successfully restored!')
-    return redirect('view_brands')
+    return redirect('products:view_brands')
 
 
 def add_category(request):
@@ -54,7 +54,7 @@ def add_category(request):
         value=Category.objects.create(category=category,category_type=categorytype)
         print(value)
         messages.success(request, 'Category added successfully!')  
-        return redirect('view_category')
+        return redirect('products:view_category')
     return render(request,'admin/category.html')
 
 
@@ -69,14 +69,14 @@ def soft_delete_category(request,category_id):
     category.save()
 
     messages.success(request, 'Category successfully soft deleted!')
-    return redirect('view_category')
+    return redirect('products:view_category')
 
 def restore_category(request,category_id):
     category= get_object_or_404(Category,category_id=category_id)
     category.is_deleted=False
     category.save()
     messages.success(request, 'Category successfully restored!')
-    return redirect('view_category')
+    return redirect('products:view_category')
 
 
 def edit_category(request, category_id):
@@ -89,7 +89,7 @@ def edit_category(request, category_id):
         category.category_type = category_type
         category.save()  
         messages.success(request, 'Category updated successfully!')  
-        return redirect('view_category')  
+        return redirect('products:view_category')  
     return render(request, 'admin/category.html', {'category': category})
 
 
@@ -112,7 +112,7 @@ def add_products(request):
         ) 
         product.category.set(category_ids)  
         messages.success(request, 'Product added successfully!')  
-        return redirect('view_products')  
+        return redirect('products:view_products')  
     # categories = Category.objects.all()
     categories = Category.objects.filter(is_deleted=False)
     # brands = Brand.objects.all()
@@ -151,7 +151,7 @@ def edit_product(request, product_id):
             products.category.set([category_id]) 
         products.save()  
         messages.success(request, 'Product updated successfully!')  
-        return redirect('view_products') 
+        return redirect('products:view_products') 
     return render(request, 'admin/product.html', {'products': products,'brands': brands,'categories': categories,})
 
 
@@ -160,7 +160,7 @@ def soft_delete_product(request, product_id):
     product.is_deleted = True
     product.save()
     messages.success(request, 'Product successfully soft deleted!')
-    return redirect('view_products')
+    return redirect('products:view_products')
 
 
 def restore_product(request, product_id):
@@ -168,7 +168,7 @@ def restore_product(request, product_id):
     product.is_deleted = False
     product.save()
     messages.success(request, 'Product successfully restored!')
-    return redirect('view_products') 
+    return redirect('products:view_products') 
 
 
 def add_variants(request,product_id):
@@ -202,7 +202,7 @@ def add_variants(request,product_id):
         )
         variant.save()
         # messages.success(request, 'Variant added successfully!')
-        return redirect('view_variants', product_id=product_id)
+        return redirect('products:view_variants', product_id=product_id)
     return render(request,'admin/add_variants.html', {'product': product})
 
 
@@ -236,7 +236,7 @@ def edit_variants(request,product_id):
 
         variant.save()
         # messages.success(request, 'Variant updated successfully!')
-        return redirect('view_variants', product_id=product_id)
+        return redirect('products:view_variants', product_id=product_id)
     return render(request, 'admin/edit_variants.html', {'product': product,'variant': variant})
 
 
@@ -246,11 +246,11 @@ def delete_variants(request, product_id):
     if request.method == 'POST':
         variant_id = request.POST.get('variant_id')
         if not variant_id: 
-            return redirect('view_variants', product_id=product_id)
+            return redirect('products:view_variants', product_id=product_id)
         variant = get_object_or_404(Variant, variant_id=variant_id, product=product)
         variant.delete()
 
-        return redirect('view_variants', product_id=product_id)
+        return redirect('products:view_variants', product_id=product_id)
     variants = Variant.objects.filter(product=product)
     return render(request, 'admin/variants.html', {'product': product, 'variants': variants})
 

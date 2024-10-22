@@ -17,8 +17,15 @@ Including another URLconf
 from django.urls import path
 from . import views
 
+app_name = 'accounts'
+
 urlpatterns = [
-    path('signup/',views.signup_user,name='signup_user'),
-    path('login_user/',views.login_user,name='login_user'),
-    path('home_user/',views.home_user,name='home_user'),    
+    path('',views.signup_user,name='signup_user'),
+    path('loginuser/',views.login_user,name='login_user'),
+    path('homeuser/',views.home_user,name='home_user'),    
+    path('adminlogin/',views.admin_login,name='admin_login'),    
+    path('adminlogout/',views.admin_logout,name='admin_logout'),  
+    path('otp-verify/', views.otp_verify, name='otp_verify'),
+    path('resend-otp/', views.resend_otp, name='resend_otp'),
+
 ]

@@ -13,7 +13,7 @@
     <link href="{% static 'admin/css/styles.css' %}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <style>
         table {
@@ -36,7 +36,7 @@
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand ps-3" href="">B.R.A.T</a>
+        <a class="navbar-brand" href="" style="padding-left: 5%;" >B.R.A.T</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
             <i class="fas fa-bars"></i>
         </button>
@@ -51,7 +51,7 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li><a class="dropdown-item" href="{% url 'accounts:admin_logout' %}">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -62,27 +62,31 @@
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
+                <div class="sb-sidenav-menu p-5" >
                     <div class="nav">
-                        <a class="nav-link" href="">
+                        <a class="nav-link " href="{% url 'admin_dashboard' %}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link active" href="{% url 'userss:view_user' %}">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Users
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="{% url 'products:view_brands' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-flag"></i></div>
+                            Brands
+                        </a>
+                        <a class="nav-link" href="{% url 'products:view_category' %}">
                             <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
                             Category
+                        </a>
+                        <a class="nav-link" href="{% url 'products:view_products' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-box-open"></i></div>
+                            Products
                         </a>
                         <a class="nav-link" href="">
                             <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                             Orders
-                        </a>
-                        <a class="nav-link" href="">
-                            <div class="sb-nav-link-icon"><i class="fas fa-box-open"></i></div>
-                            Products
                         </a>
                         <a class="nav-link" href="">
                             <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
@@ -97,6 +101,7 @@
                             Sales Report
                         </a>
                     </div>
+                    
                 </div>
             </nav>
         </div>
@@ -126,7 +131,7 @@
                             </span>
                             <select id="sortOption" class="form-select">
                                 <option value="">Sort by</option>
-                                <option value="name">Name</option>
+                                <!-- <option value="name">Name</option> -->
                                 <!-- <option value="date">Start Date</option> -->
                             </select>
                         </div>
@@ -192,13 +197,13 @@
                                         <td>
                                             {% if not user.isBlocked %}
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmBlockModal{{ user.user_id }}" 
-                                                data-action-url="{% url 'block_user' user.user_id %}" 
+                                                data-action-url="{% url 'userss:block_user' user.user_id %}" 
                                                 data-message="Are you sure you want to block {{ user.username }}?">
                                                 Block
                                             </button>
                                             {% else %}
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#confirmUnblockModal{{ user.user_id }}" 
-                                                data-action-url="{% url 'unblock_user' user.user_id %}" 
+                                                data-action-url="{% url 'userss:unblock_user' user.user_id %}" 
                                                 data-message="Are you sure you want to unblock {{ user.username }}?">
                                                 Unblock
                                             </button>
@@ -216,7 +221,7 @@
                                                             <p id="blockModalMessage">Are you sure you want to block {{ user.username }}?</p>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form method="POST" action="{% url 'block_user' user.user_id %}">
+                                                            <form method="POST" action="{% url 'userss:block_user' user.user_id %}">
                                                                 {% csrf_token %}
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                                                 <button type="submit" class="btn btn-danger">Confirm</button>
@@ -238,7 +243,7 @@
                                                             <p id="unblockModalMessage">Are you sure you want to unblock {{ user.username }}?</p>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form method="POST" action="{% url 'unblock_user' user.user_id %}">
+                                                            <form method="POST" action="{% url 'userss:unblock_user' user.user_id %}">
                                                                 {% csrf_token %}
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                                                 <button type="submit" class="btn btn-success">Confirm</button>

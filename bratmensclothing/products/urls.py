@@ -19,6 +19,8 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+app_name = 'products'
+
 urlpatterns = [
     path('addbrands/',views.add_brands,name='add_brands'),
     path('viewbrands/', views.view_brands, name='view_brands'),

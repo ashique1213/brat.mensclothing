@@ -16,10 +16,14 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
+app_name = 'userss'
 
 urlpatterns = [
     path('view_user/',views.view_user,name='view_user'),
     path('block-user/<int:user_id>',views.block_user,name='block_user'),
     path('unblock-user/<int:user_id>',views.unblock_user,name='unblock_user'),
     
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
